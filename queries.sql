@@ -1,14 +1,8 @@
--- Returns first 100 rows from tutorial.yammer_events
-  SELECT * FROM tutorial.yammer_events LIMIT 100;
-
 -- weekly active users -- 
-SELECT
-  date_trunc('week', occurred_at) AS week_start,
-  count(DISTINCT user_id) AS weekly_active_users
-FROM
-  tutorial.yammer_events
-WHERE
-  event_type = 'engagement'
+SELECT DATE_TRUNC('week', occurred_at) AS week_start,
+       COUNT(DISTINCT user_id) AS weekly_active_users
+FROM tutorial.yammer_events
+WHERE event_type = 'engagement'
 GROUP BY 1
 ORDER BY 1
 
@@ -16,7 +10,7 @@ ORDER BY 1
 -- Querying List of Devices ---
 SELECT DISTINCT device
 FROM tutorial.yammer_events
-/*Output
+/* Displaying Devices
 dell inspiron desktop, amazon fire phone, nexus 10, macbook pro, asus chromebook, ipad mini, windows surface, samsumg galaxy tablet,
 macbook air, lenovo thinkpad, mac mini, iphone 5, nexus 7, kindle fire, iphone 5s, acer aspire desktop, acer aspire notebook, nexus 5
 dell inspiron notebook, htc one, iphone 4s, samsung galaxy note, nokia lumia 635, ipad air, hp pavilion desktop, samsung galaxy s4
@@ -24,7 +18,7 @@ dell inspiron notebook, htc one, iphone 4s, samsung galaxy note, nokia lumia 635
 
 
 /*
-Categorize above devices into Computer, Tablet and Phone.
+Categorize different devices into buckets - Computer, Tablet and Phone.
 Query and Plot user engagement by device 
 **/
 SELECT DATE_TRUNC('week', occurred_at) AS week,
@@ -38,7 +32,7 @@ GROUP BY 1
 ORDER BY 1
 
 
-/* User engagement by Mobile vs Web */
+/* User engagement - Mobile vs Web */
 SELECT DATE_TRUNC('week', occurred_at) AS week,
        COUNT(DISTINCT CASE WHEN device IN ('macbook pro', 'acer aspire notebook','acer aspire desktop','lenovo thinkpad', 'mac mini', 'dell inspiron desktop','dell inspiron notebook','windows surface','macbook air','asus chromebook','hp pavilion desktop') THEN user_id ELSE NULL END) AS web,
        COUNT(DISTINCT CASE WHEN device IN ('iphone 5s','nokia lumia 635','amazon fire phone','iphone 4s','htc one','iphone 5','samsung galaxy s4', 'kindle fire','samsung galaxy note','ipad mini','nexus 7','nexus 10','samsumg galaxy tablet','nexus 5','ipad air') THEN user_id ELSE NULL END) AS mobile
