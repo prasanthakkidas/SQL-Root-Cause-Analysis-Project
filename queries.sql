@@ -56,7 +56,7 @@ search_click_result_9 search_run send_message view_inbox
 /* Funnel Analysis - Engagement in different stages of User Flow */
 SELECT DATE_TRUNC('week', occurred_at) AS week,
        COUNT(CASE WHEN event_name = 'home_page' THEN user_id ELSE NULL END) AS home_page,
-       COUNT(CASE WHEN event_name = 'like_page' THEN user_id ELSE NULL END) AS like_page,
+       COUNT(CASE WHEN event_name = 'like_message' THEN user_id ELSE NULL END) AS like_message,
        COUNT(CASE WHEN event_name = 'login' THEN user_id ELSE NULL END) AS login,
        COUNT(CASE WHEN event_name = 'search_autocomplete' THEN user_id ELSE NULL END) AS search_autocomplete,
        COUNT(CASE WHEN event_name = 'search_run' THEN user_id ELSE NULL END) AS search_run,
